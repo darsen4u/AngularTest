@@ -1,0 +1,90 @@
+
+
+<form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+    <div class="container">
+        <div class="form_row">
+            <div class="form_column">
+            <label for="selTransferType">Transfer Type: </label>
+            <select id="selTransferType" name="selTransferType" formControlName="selTransferType" required>
+                <option value="1">Dealer to Dealer</option>
+                <option value="2">Dealer to Demo</option>
+                <option value="3">Demo to Dealer</option>
+            </select>
+            </div>
+        </div>
+        <div class="form_row">
+            <div class="form_column">
+                <label for="fromDealer">From Dealer: </label>
+                <input id="fromDealer" type="text" formControlName="fromDealer" required>
+            </div>
+            <div class="form_column">
+                <button mat-raised-button (click)="openDialog()">Lookup</button>
+            </div>
+        </div>
+        <div class="form_row">
+            <div class="form_column">
+                <label for="toDealer">To Dealer: </label>
+                <input id="toDealer" type="text" formControlName="toDealer" required>
+            </div>
+            <div class="form_column">
+                <button type="button">Lookup</button>
+            </div>
+        </div>
+        <div formGroupName="address">
+            <h2>Address</h2>
+
+            <label for="street">Street: </label>
+            <input id="street" type="text" formControlName="street">
+
+            <label for="city">City: </label>
+            <input id="city" type="text" formControlName="city">
+
+            <label for="state">State: </label>
+            <input id="state" type="text" formControlName="state">
+
+            <label for="zip">Zip Code: </label>
+            <input id="zip" type="text" formControlName="zip">
+        </div>
+
+        <div formArrayName="aliases">
+            <h2>Aliases</h2>
+            <button type="button" (click)="addAlias()">+ Add another alias</button>
+
+            <div *ngFor="let alias of aliases.controls; let i=index">
+                <!-- The repeated alias template -->
+                <label for="alias-{{ i }}">Alias:</label>
+                <input id="alias-{{ i }}" type="text" [formControlName]="i">
+            </div>
+        </div>
+
+
+        <p>Complete the form to enable button.</p>
+        <button type="submit" [disabled]="!profileForm.valid">Submit</button>
+    </div>
+</form>
+
+<hr>
+
+<p>Form Value: {{ profileForm.value | json }}</p>
+
+<p>Form Status: {{ profileForm.status }}</p>
+
+<button type="button" (click)="updateProfile()">Update Profile</button>
+
+<style>
+    .container {
+        background-color: burlywood;
+        height: 100vh;
+        width: 100%
+    }
+
+    .container .form_row {
+        background-color: bisque;
+    }
+
+    .container .form_row .form_column {
+        background-color: azure;
+        display: inline-block;
+        padding: 10px;
+    }
+</style>
